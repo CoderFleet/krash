@@ -27,7 +27,6 @@ fun main() = runBlocking {
         }
     }
 
-    // 🔥 Send messages
     while (true) {
         val msg = readln()
 

@@ -1,6 +1,8 @@
 package com.rudransh.krash.service
 
 import com.rudransh.krash.chat.*
+import com.rudransh.krash.entity.Message
+import com.rudransh.krash.repository.MessageRepository
 import kotlinx.coroutines.channels.SendChannel
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
@@ -10,16 +12,23 @@ import org.springframework.stereotype.Service
 import java.util.concurrent.CopyOnWriteArrayList
 
 @Service
-class ChatService : ChatServiceGrpcKt.ChatServiceCoroutineImplBase() {
+class ChatService(private val repo: MessageRepository) : ChatServiceGrpcKt.ChatServiceCoroutineImplBase() {
     private val clients = CopyOnWriteArrayList<SendChannel<ChatMessage>>()
 
     override suspend fun sendMessage(request: ChatMessage): Empty {
+        repo.save(
+            Message(
+                sender = request.sender,
+                content = request.content,
+                timestamp = request.timestamp,
+            )
+        )
         println("Message from ${request.sender}: ${request.content}")
 
         clients.forEach { client -> try {
                 client.trySend(request)
             } catch(e: Exception) {
-                println("Failed to send message to client")
+                println("Failed to send message to client ${e}")
             }
         }
 

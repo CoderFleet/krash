@@ -29,7 +29,7 @@ repositories {
 extra["springGrpcVersion"] = "1.0.2"
 
 dependencies {
-//	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.boot:spring-boot-starter-webmvc")
 	implementation("io.grpc:grpc-services")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
