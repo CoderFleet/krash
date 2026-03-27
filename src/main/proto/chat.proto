@@ -14,10 +14,12 @@ message ChatMessage {
   string sender = 1;
   string content = 2;
   int64 timestamp = 3;
+  string roomId = 4;
 }
 
 message User {
   string username = 1;
+  string roomId = 2;
 }
 
 message Empty {}

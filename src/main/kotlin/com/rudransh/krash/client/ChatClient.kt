@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.collect
 
 fun main() = runBlocking {
     val username = print("Enter username: ").let { readln() }
+    val roomId = print("Enter room id: ").let { readln() }
 
     val channel = ManagedChannelBuilder
         .forAddress("localhost", 9090)
@@ -18,7 +19,7 @@ fun main() = runBlocking {
     launch {
         try {
             stub.streamMessages(
-                User.newBuilder().setUsername(username).build()
+                User.newBuilder().setUsername(username).setRoomId(roomId).build()
             ).collect {
                 println("\n${it.sender}: ${it.content}")
             }
@@ -34,6 +35,7 @@ fun main() = runBlocking {
             ChatMessage.newBuilder()
                 .setSender(username)
                 .setContent(msg)
+                .setRoomId(roomId)
                 .setTimestamp(System.currentTimeMillis())
                 .build()
         )
