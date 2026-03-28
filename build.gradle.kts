@@ -89,3 +89,10 @@ allOpen {
 tasks.withType<Test> {
 	useJUnitPlatform()
 }
+
+tasks.register<JavaExec>("runClient") {
+	group = "application"
+	description = "run the chat client"
+	classpath = sourceSets["main"].runtimeClasspath
+	mainClass.set("com.rudransh.krash.client.ChatClientKt")
+}

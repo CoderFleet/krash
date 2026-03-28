@@ -9,9 +9,9 @@ import jakarta.persistence.Id
 data class Message (
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     val id: Long = 0,
     val sender: String,
     val content: String,
-    val timestamp: Long
+    val timestamp: Long,
+    val roomId: String
 )
